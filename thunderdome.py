@@ -19,7 +19,7 @@ class Teacher:
     print(self.name + " attacked by weapon " 
             + weapon.weaponName
             + " for " + str(weapon.weaponDamage) + " damage!")
-    self.isDead()
+    self.isDeadPrint()
 
   def attack(self, teacher):
     print(self.name + " attacks " + teacher.name)
@@ -29,7 +29,7 @@ class Teacher:
     print(self.name + " heals for " + str(health) + " health")
     self.health = self.health + health
 
-  def isDead(self):
+  def isDeadPrint(self):
     if (self.dead == True):
       print(self.name + " is dead!")
     else:
@@ -93,10 +93,21 @@ def gameManager():
     p1.print()
     p2.print()
 
-    p2.attack(p1)
-    p1.heal(30)
-    p2.attack(p1)
-    p1.attack(p2)
+    playerTurn = 1
+    count = 1
+    allPlayersAlive = True
+    while (allPlayersAlive):
+      #p1.heal(30)
+      if(p2.dead == False):
+        p2.attack(p1)
+      if(p1.dead == False):
+        p1.attack(p2)
+      if(p1.dead):
+        allPlayersAlive = False
+        print(p1.name + " is dead. " + p2.name + "  wins!")
+      elif (p2.dead):
+        allPlayersAlive = False
+        print(p2.name + " is dead. " + p1.name + "  wins!")
 
 
 #testTeachers()
