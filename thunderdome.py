@@ -29,13 +29,21 @@ class Teacher:
     print(self.name + " heals for " + str(health) + " health")
     self.health = self.health + health
 
-  #TODO - build into user input actions
   def playerTurn(self, enemy):
-    action = randint(1,2)
     if(self.dead == False):
-      if (action == 1):
+      action = input("Pick 1 to attack, 2 to heal")
+      if (action == '1'):
         self.attack(enemy)
-      elif (action == 2):
+      elif (action == '2'):
+        self.heal(10)
+
+  def enemyTurn(self, enemy):
+    action = randint(1,3)
+    print("Enemy action: " + str(action))
+    if(self.dead == False):
+      if action in {1,2}:
+        self.attack(enemy)
+      elif action is 3:
         self.heal(10)
 
   def isDeadPrint(self):
@@ -151,7 +159,7 @@ def testUserInput():
       if(playerTurn == 1):
         p1.playerTurn(p2)
       elif(playerTurn == 0):
-        p2.playerTurn(p1)
+        p2.enemyTurn(p1)
       if(p1.dead):
         allPlayersAlive = False
         print(p1.name + " is dead. " + p2.name + "  wins!")
