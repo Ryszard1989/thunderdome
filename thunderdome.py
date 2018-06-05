@@ -97,17 +97,27 @@ def gameManager():
     count = 1
     allPlayersAlive = True
     while (allPlayersAlive):
-      #p1.heal(30)
-      if(p2.dead == False):
-        p2.attack(p1)
-      if(p1.dead == False):
-        p1.attack(p2)
+      playerTurn = count%2
+      if(playerTurn == 1):
+        if(p1.dead == False):
+          p1.attack(p2)
+      elif(playerTurn == 0):
+        if(p2.dead == False):
+          p2.attack(p1)
       if(p1.dead):
         allPlayersAlive = False
         print(p1.name + " is dead. " + p2.name + "  wins!")
       elif (p2.dead):
         allPlayersAlive = False
         print(p2.name + " is dead. " + p1.name + "  wins!")
+      count = count + 1
+
+def playerTurn(player, enemy):
+  if(player.dead == False):
+    player.attack(enemy)
+
+   
+
 
 
 #testTeachers()
