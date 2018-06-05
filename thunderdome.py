@@ -1,4 +1,4 @@
-
+from random import randint
 
 class Teacher:
   def __init__(self, name, health, weapon):
@@ -28,6 +28,15 @@ class Teacher:
   def heal(self, health):
     print(self.name + " heals for " + str(health) + " health")
     self.health = self.health + health
+
+  #TODO - build into user input actions
+  def playerTurn(self, enemy):
+    action = randint(1,2)
+    if(self.dead == False):
+      if (action == 1):
+        self.attack(enemy)
+      elif (action == 2):
+        self.heal(10)
 
   def isDeadPrint(self):
     if (self.dead == True):
@@ -73,7 +82,48 @@ def testTeachers():
   t2.attack(t)
   t.attack(t2)
 
-def gameManager():
+
+def testGameLoop():
+    print ("***WELCOME TO THE THUNDERDOME***\n")
+    weapon1 = Weapon("Axe",42)
+    weapon2 = Weapon("Minigun",15)
+    weapon3 = Weapon("Baseball Bat",20)
+    weapon4 = Weapon("Rubber Duck", 8)
+    player1Name = "player 1"
+    player2Name = "player 2"
+    weaponBox = [weapon1, weapon2, weapon3, weapon4]
+    count = 1
+    for i in weaponBox:
+      print (str(count) + ") " + i.weaponName)
+      count = count+1
+    player1Weapon = 1
+    player2Weapon = 2
+    p1 = Teacher(player1Name, 100, weaponBox[player1Weapon-1])
+    p2 = Teacher(player2Name, 100, weaponBox[player2Weapon-1])
+    p1.print()
+    p2.print()
+
+    playerTurn = 1
+    count = 1
+    allPlayersAlive = True
+    while (allPlayersAlive):
+      playerTurn = count%2
+      if(playerTurn == 1):
+        if(p1.dead == False):
+          p1.attack(p2)
+      elif(playerTurn == 0):
+        if(p2.dead == False):
+          p2.attack(p1)
+      if(p1.dead):
+        allPlayersAlive = False
+        print(p1.name + " is dead. " + p2.name + "  wins!")
+      elif (p2.dead):
+        allPlayersAlive = False
+        print(p2.name + " is dead. " + p1.name + "  wins!")
+      count = count + 1
+
+
+def testUserInput():
     print ("***WELCOME TO THE THUNDERDOME***\n")
     weapon1 = Weapon("Axe",42)
     weapon2 = Weapon("Minigun",15)
@@ -99,11 +149,9 @@ def gameManager():
     while (allPlayersAlive):
       playerTurn = count%2
       if(playerTurn == 1):
-        if(p1.dead == False):
-          p1.attack(p2)
+        p1.playerTurn(p2)
       elif(playerTurn == 0):
-        if(p2.dead == False):
-          p2.attack(p1)
+        p2.playerTurn(p1)
       if(p1.dead):
         allPlayersAlive = False
         print(p1.name + " is dead. " + p2.name + "  wins!")
@@ -112,17 +160,11 @@ def gameManager():
         print(p2.name + " is dead. " + p1.name + "  wins!")
       count = count + 1
 
-def playerTurn(player, enemy):
-  if(player.dead == False):
-    player.attack(enemy)
-
-   
-
 
 
 #testTeachers()
-gameManager()
-
+#testGameLoop()
+testUserInput()
 
 
 
